@@ -6,27 +6,28 @@
 WorkerManager::WorkerManager() {
 
 	//文件不存在
-	ofstream ofs;
-	ofs.open(FILENAME,ios::in);
-	if (!ofs.is_open())
+	ifstream ifs;
+	ifs.open(FILENAME,ios::in);
+	if (!ifs.is_open())
 	{
+		//cout << "文件不存在！" << endl;
 		this->empNum = 0;
 		this->empArray = NULL;
 		this->fileIsEmpty = true;
-		ofs.close();
+		ifs.close();
 		return;
 	}
 
 	//文件存在且为空
-	char ch;
-	ifstream ifs;//读取文件
+	char ch; 
 	ifs >> ch;
 	if (ifs.eof())//文件是否为空
 	{
+		//cout << "文件为空！" << endl;
 		this->empNum = 0;
 		this->empArray = NULL;
 		this->fileIsEmpty = true;
-		ofs.close();
+		ifs.close();
 		return;
 	}
 
@@ -193,7 +194,7 @@ void WorkerManager::initEmp() {
 
 //显示职工信息
 void WorkerManager::showInfo() {
-	if (this->empArray !=NULL)
+	if (this->empArray != NULL)
 	{
 		for (int i = 0; i < this->empNum; i++)
 		{
@@ -206,4 +207,54 @@ void WorkerManager::showInfo() {
 	}
 	system("pause");
 	system("cls");
+}
+
+//删除职工信息
+void WorkerManager::deleteEmp() {
+	if (this->empArray==NULL)
+	{
+		cout << "该系统无职工信息！" << endl;
+		system("pause");
+		system("cls");
+		return;
+	}
+	cout << "请输入要删除的职工编号：" << endl;
+	int id = 0;
+	cin >> id;
+	int result = this->getEmpById(id);
+
+	if (result != -1)
+	{
+		for (int i = result; i < this->empNum-1; i++)
+		{
+			this->empArray[i] = this->empArray[i+1];
+		}
+		//delete this->empArray[this->empNum-1];
+		
+		this->empNum--;
+		this->save();//保存到文件
+		cout << "删除成功！" << endl;
+	}
+	else
+	{
+		cout << "删除失败！该职工不存在！" << endl;
+	}
+	system("pause");
+	system("cls");
+}
+
+//根据id查找职工信息
+
+int WorkerManager::getEmpById(int id) {
+	int index = -1;
+	for (int i = 0; i < this->empNum; i++)
+	{
+		if (this->empArray[i]->id == id)
+		{
+			index = i;//返回职工所在位置
+			break;
+		}
+	}
+	return index;
+	
 }

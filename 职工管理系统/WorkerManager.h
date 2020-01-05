@@ -35,4 +35,10 @@ public:
 
 	//显示职工信息
 	void showInfo();
+
+	//删除职工信息
+	void deleteEmp();
+
+	//根据id查找职工信息
+	int getEmpById(int id);
 };

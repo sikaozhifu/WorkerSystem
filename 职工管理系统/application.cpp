@@ -23,7 +23,9 @@ int main() {
 		case 2://显示职工信息
 			wk.showInfo();
 			break;
+
 		case 3://删除离职职工
+			wk.deleteEmp();
 			break;
 		case 4://修改职工信息
 			break;
