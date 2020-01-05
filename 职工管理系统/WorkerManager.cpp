@@ -4,8 +4,38 @@
 #include "Boss.h"
 
 WorkerManager::WorkerManager() {
-	this->empNum = 0;
-	this->empArray = NULL;
+
+	//文件不存在
+	ofstream ofs;
+	ofs.open(FILENAME,ios::in);
+	if (!ofs.is_open())
+	{
+		this->empNum = 0;
+		this->empArray = NULL;
+		this->fileIsEmpty = true;
+		ofs.close();
+		return;
+	}
+
+	//文件存在且为空
+	char ch;
+	ifstream ifs;//读取文件
+	ifs >> ch;
+	if (ifs.eof())//文件是否为空
+	{
+		this->empNum = 0;
+		this->empArray = NULL;
+		this->fileIsEmpty = true;
+		ofs.close();
+		return;
+	}
+
+	//文件存在且不为空
+
+	int num = this->getNumInFile();//获取文件中的数据个数
+	this->empNum = num;
+	this->empArray = new Worker * [this->empNum];//开辟数组
+	this->initEmp();//初始化
 
 }
 WorkerManager::~WorkerManager() {
@@ -95,7 +125,68 @@ void WorkerManager::addEmp() {
 	delete[] this->empArray;
 	this->empArray = newSpace;
 	this->empNum = newNum;
+	this->fileIsEmpty = false;
 	cout << "成功添加" << addNum << "名职工" << endl;
+	//保存到文件中
+	this->save();
 	system("pause");
 	system("cls");
+}
+//保存到文件
+void WorkerManager::save() {
+
+	ofstream ofs;
+	ofs.open(FILENAME,ios::out);
+	for (int i = 0; i < this->empNum; i++)
+	{
+		ofs << this->empArray[i]->id << " "
+			<< this->empArray[i]->name << " "
+			<< this->empArray[i]->deptId << endl;
+	}
+	ofs.close();
+
+}
+
+
+//统计文件中的人数
+int WorkerManager::getNumInFile() {
+	ifstream ifs;
+	ifs.open(FILENAME,ios::in);
+	int id;
+	string name;
+	int deptId;
+	int num = 0;
+	while (ifs>>id&&ifs>>name&&ifs>>deptId)
+	{
+		num++;
+	}
+	return num;
+}
+
+//初始化员工
+void WorkerManager::initEmp() {
+	ifstream ifs;
+	ifs.open(FILENAME,ios::in);
+	int id;
+	string name;
+	int deptId;
+	int index = 0;//文件索引
+	while (ifs>>id&&ifs>>name&&ifs>>deptId) {//根据空格读取
+		Worker* worker = NULL;
+		if (deptId==1)
+		{
+			worker = new Employee(id,name,deptId);
+		}
+		else if (deptId==2) {
+			worker = new Manager(id,name,deptId);
+
+		}
+		else
+		{
+			worker = new Boss(id,name,deptId);
+		}
+		this->empArray[index] = worker;
+		index++;
+	}
+	ifs.close();
 }
