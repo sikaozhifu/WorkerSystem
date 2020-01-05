@@ -190,3 +190,20 @@ void WorkerManager::initEmp() {
 	}
 	ifs.close();
 }
+
+//显示职工信息
+void WorkerManager::showInfo() {
+	if (this->empArray !=NULL)
+	{
+		for (int i = 0; i < this->empNum; i++)
+		{
+			this->empArray[i]->showInfo();
+		}
+	}
+	else
+	{
+		cout << "系统无职工！" << endl;
+	}
+	system("pause");
+	system("cls");
+}

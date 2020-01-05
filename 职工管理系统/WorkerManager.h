@@ -32,4 +32,7 @@ public:
 
 	//初始化员工
 	void initEmp();
+
+	//显示职工信息
+	void showInfo();
 };
