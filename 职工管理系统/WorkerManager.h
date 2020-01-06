@@ -41,4 +41,10 @@ public:
 
 	//根据id查找职工信息
 	int getEmpById(int id);
+
+	//根据姓名查找职工信息
+	void getEmpByName(string name);
+
+	//查找职工信息
+	void getEmp();
 };

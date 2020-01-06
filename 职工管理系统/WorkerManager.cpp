@@ -258,3 +258,59 @@ int WorkerManager::getEmpById(int id) {
 	return index;
 	
 }
+
+//根据姓名查找职工信息
+void WorkerManager::getEmpByName(string name) {
+
+	
+	bool flag = false;
+	for (int i = 0; i < this->empNum; i++)
+	{
+		if (this->empArray[i]->name == name)
+		{
+			this->empArray[i]->showInfo();
+			flag = true;
+		}
+	}
+	if (!flag)
+	{
+		cout << "查无此人！" << endl;
+	}
+
+}
+
+//查找职工信息
+void WorkerManager::getEmp() {
+	if (this->empArray == NULL)
+	{
+		cout << "该系统无职工信息！" << endl;
+		system("pause");
+		system("cls");
+	}
+	cout << "请输入查询条件：" << endl;
+	cout << "1.根据职工编号查找：" << endl;
+	cout << "2.根据职工姓名查找" << endl;
+	int select;
+	cin >> select;
+	if (select == 1)
+	{
+		cout << "请输入职工编号：" << endl;
+		int id;
+		cin >> id;
+		int result = this->getEmpById(id);
+		this->empArray[result]->showInfo();
+	}
+	else if(select == 2)
+	{
+		cout << "请输入职工姓名：" << endl;
+		string name;
+		cin >> name;
+		this->getEmpByName(name);
+	}
+	else {
+		cout << "您输入的选项有误！" << endl;
+	}
+	system("pause");
+	system("cls");
+}
+

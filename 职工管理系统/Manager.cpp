@@ -15,5 +15,5 @@ void Manager::showInfo() {
 	cout << "职工编号：" << this->id
 		<< "\t职工姓名：" << this->name
 		<< "\t职工岗位：" << this->getDepet()
-		<< "\t职工职责：完成 老板交给的任务"<<endl;
+		<< "\t职工职责：完成老板交给的任务"<<endl;
 }

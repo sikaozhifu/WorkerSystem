@@ -30,6 +30,7 @@ int main() {
 		case 4://修改职工信息
 			break;
 		case 5://查找职工信息
+			wk.getEmp();
 			break;
 		case 6://按照编号排序
 			break;
