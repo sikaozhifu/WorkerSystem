@@ -27,6 +27,9 @@ public:
 	//判断文件是否为空
 	bool fileIsEmpty;
 
+	//判断系统中是否有记录
+	void systemIsEmpty();
+
 	//统计文件中的人数
 	int getNumInFile();
 
@@ -47,4 +50,7 @@ public:
 
 	//查找职工信息
 	void getEmp();
+
+	//按照职工编号排序
+	void sortEmp();
 };

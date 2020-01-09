@@ -194,16 +194,12 @@ void WorkerManager::initEmp() {
 
 //显示职工信息
 void WorkerManager::showInfo() {
-	if (this->empArray != NULL)
+
+	this->systemIsEmpty();
+
+	for (int i = 0; i < this->empNum; i++)
 	{
-		for (int i = 0; i < this->empNum; i++)
-		{
-			this->empArray[i]->showInfo();
-		}
-	}
-	else
-	{
-		cout << "系统无职工！" << endl;
+		this->empArray[i]->showInfo();
 	}
 	system("pause");
 	system("cls");
@@ -211,13 +207,9 @@ void WorkerManager::showInfo() {
 
 //删除职工信息
 void WorkerManager::deleteEmp() {
-	if (this->empArray==NULL)
-	{
-		cout << "该系统无职工信息！" << endl;
-		system("pause");
-		system("cls");
-		return;
-	}
+	
+	this->systemIsEmpty();
+
 	cout << "请输入要删除的职工编号：" << endl;
 	int id = 0;
 	cin >> id;
@@ -246,6 +238,9 @@ void WorkerManager::deleteEmp() {
 //根据id查找职工信息
 
 int WorkerManager::getEmpById(int id) {
+
+	this->systemIsEmpty();
+
 	int index = -1;
 	for (int i = 0; i < this->empNum; i++)
 	{
@@ -262,7 +257,8 @@ int WorkerManager::getEmpById(int id) {
 //根据姓名查找职工信息
 void WorkerManager::getEmpByName(string name) {
 
-	
+	this->systemIsEmpty();
+
 	bool flag = false;
 	for (int i = 0; i < this->empNum; i++)
 	{
@@ -281,12 +277,9 @@ void WorkerManager::getEmpByName(string name) {
 
 //查找职工信息
 void WorkerManager::getEmp() {
-	if (this->empArray == NULL)
-	{
-		cout << "该系统无职工信息！" << endl;
-		system("pause");
-		system("cls");
-	}
+	
+	this->systemIsEmpty();
+
 	cout << "请输入查询条件：" << endl;
 	cout << "1.根据职工编号查找：" << endl;
 	cout << "2.根据职工姓名查找" << endl;
@@ -312,5 +305,68 @@ void WorkerManager::getEmp() {
 	}
 	system("pause");
 	system("cls");
+}
+
+
+//按照职工编号排序
+void WorkerManager::sortEmp() {
+
+	this->systemIsEmpty();
+	cout << "请选择要排序的模式：" << endl;
+	cout << "1.升序(ASC)" << endl;
+	cout << "2.降序(DSC)" << endl;
+	int select = 0;
+	cin >> select;
+	int len = this->empNum;
+	for (int i = 0; i < len; i++)//选择排序
+	{
+		int minOrMax = i;
+		if (select==1)
+		{
+			for (int j = i + 1; j < len; j++)
+			{
+				if (this->empArray[minOrMax]->id > this->empArray[j]->id)//升序
+				{
+					minOrMax = j;
+				}
+			}
+		}
+		else if (select == 2)
+		{
+			for (int j = i + 1; j < len; j++)
+			{
+				if (this->empArray[minOrMax]->id < this->empArray[j]->id)//降序
+				{
+					minOrMax = j;
+				}
+			}
+		}
+		else
+		{
+			cout << "输入选项有误！默认升序排列：" << endl;
+
+			break;
+		}
+		
+		if (minOrMax != i)
+		{
+			Worker* temp = this->empArray[minOrMax];
+			this->empArray[minOrMax] = this->empArray[i];
+			this->empArray[i] = temp;
+		}
+	}
+	//显示信息
+	this->showInfo();
+}
+
+//判断系统中是否有记录
+void WorkerManager::systemIsEmpty() {
+	if (this->empArray == NULL)
+	{
+		cout << "该系统无职工信息！" << endl;
+		system("pause");
+		system("cls");
+		return;
+	}
 }
 

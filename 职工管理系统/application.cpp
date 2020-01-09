@@ -23,7 +23,6 @@ int main() {
 		case 2://显示职工信息
 			wk.showInfo();
 			break;
-
 		case 3://删除离职职工
 			wk.deleteEmp();
 			break;
@@ -33,6 +32,7 @@ int main() {
 			wk.getEmp();
 			break;
 		case 6://按照编号排序
+			wk.sortEmp();
 			break;
 		case 7://清空所有文档
 			break;
