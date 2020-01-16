@@ -195,14 +195,17 @@ void WorkerManager::initEmp() {
 //显示职工信息
 void WorkerManager::showInfo() {
 
-	this->systemIsEmpty();
+	bool flag = this->systemIsEmpty();
 
 	for (int i = 0; i < this->empNum; i++)
 	{
 		this->empArray[i]->showInfo();
 	}
-	system("pause");
-	system("cls");
+	if (flag != true) {
+		system("pause");
+		system("cls");
+	}
+	
 }
 
 //删除职工信息
@@ -360,13 +363,54 @@ void WorkerManager::sortEmp() {
 }
 
 //判断系统中是否有记录
-void WorkerManager::systemIsEmpty() {
+bool WorkerManager::systemIsEmpty() {
 	if (this->empArray == NULL)
 	{
 		cout << "该系统无职工信息！" << endl;
 		system("pause");
 		system("cls");
-		return;
+		return true;
 	}
+	else {
+		return false;
+	}
+}
+//清空文件
+void WorkerManager::clearEmp() {
+	this->systemIsEmpty();
+	cout << "您确认要清空系统吗？" << endl;
+	cout << "1.确认" << endl;
+	cout << "2.取消" << endl;
+	int select = 0;
+	cin >> select;
+	if (select == 1)
+	{
+		ofstream ofs;
+		ofs.open(FILENAME,ios::trunc);//如果存在文件，删除并重新创建
+		ofs.close();
+		if (this->empArray != NULL)
+		{
+			for (int i = 0; i < this->empNum; i++)
+			{
+				if (this->empArray[i] != NULL)
+				{
+					delete this->empArray[i];
+				}
+			}
+			this->empNum = 0;
+			delete[] this->empArray;
+			this->empArray = NULL;
+			this->fileIsEmpty = true;
+		}
+		cout << "清空成功！" << endl;
+	}
+	else if (select == 2) {
+		cout << "取消成功！" << endl;
+	}
+	else {
+		cout << "您输入的选项有误！" << endl;
+	}
+	system("pause");
+	system("cls");
 }
 
