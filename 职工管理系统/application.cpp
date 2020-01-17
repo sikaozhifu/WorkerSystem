@@ -14,7 +14,7 @@ int main() {
 		cin >> select;
 		switch (select)
 		{
-		case 0:
+		case 0://退出系统
 			wk.exitSystem();
 			break;
 		case 1://增加职工信息
@@ -27,6 +27,7 @@ int main() {
 			wk.deleteEmp();
 			break;
 		case 4://修改职工信息
+			wk.updateEmp();
 			break;
 		case 5://查找职工信息
 			wk.getEmp();

@@ -56,4 +56,7 @@ public:
 
 	//清空文件
 	void clearEmp();
+
+	//修改职工信息
+	void updateEmp();
 };

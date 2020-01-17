@@ -414,3 +414,54 @@ void WorkerManager::clearEmp() {
 	system("cls");
 }
 
+
+//修改职工信息
+void WorkerManager::updateEmp() {
+	this->systemIsEmpty();
+	int id = 0;
+	string name = "";
+	int deptId = 0;
+	cout << "输入您修改的职工编号：" << endl;
+	cin >> id;
+	int result = this->getEmpById(id);
+	if (result == -1) {
+		cout << "查无此人，请重新输入！" << endl;
+		system("pause");
+		system("cls");
+		return;
+	}
+	delete this->empArray[result];//删除该职工
+
+	cout << "输入您修改的职工姓名：" << endl;
+	cin >> name;
+
+	cout << "请选择该职工岗位：" << endl;
+	cout << "1.普通职工" << endl;
+	cout << "2.部门经理" << endl;
+	cout << "3.公司总裁" << endl;
+	cin >> deptId;
+	Worker* worker = NULL;
+	switch (deptId)
+	{
+	case 1:
+		worker = new Employee(id,name,deptId);
+		break;
+	case 2:
+		worker = new Manager(id,name,deptId);
+		break;
+	case 3:
+		worker = new Boss(id,name,deptId);
+		break;
+	default:
+		cout << "职工岗位不存在!" << endl;
+		system("pause");
+		system("cls");
+		return;
+	}
+	this->empArray[result] = worker;//重新赋值
+	this->save();
+	cout << "修改成功！" << endl;
+	system("pause");
+	system("cls");
+}
+
